@@ -1,0 +1,66 @@
+---
+output:
+  word_document: default
+  html_document: default
+---
+# Module 3 - Assignment 2
+# Subramanian, Subbu
+# Exploratory Data Analysis
+
+Diamond Color and Price
+
+```{r Diamond Carat and Price}
+library(tidyverse)
+
+ggplot(data=diamonds,aes(x=carat,y=price))+
+ geom_point()
+
+
+```
+
+1.) What do you notice from the scatterplot as the carat size increases? Price Increases
+2.) From the scatterplot, what carats are most represented within the diamonds dataset? 1 to 2
+
+```{r Code to determine how color is tied to price}
+
+library(tidyverse)
+ggplot(data=diamonds,aes(x=color,y=price))+
+ geom_point()
+
+
+```
+
+This plot isnt that useful as the price doesnt seem to vary much based on the color of the diamond.
+
+
+```{r Color and Price}
+library(tidyverse)
+ggplot(data=diamonds,aes(x=carat,y=price,color=color))+
+ geom_point()
+  
+
+
+```
+
+1.) Does color impact the price? Again not conclusive as the same set of colors appears to be on bothe low price and high price ends.
+2.) Are certain colors associated with carat size? Provide an example. Yes, the larger the carat the color worsens to J
+
+```{r Sampling Data}
+
+library(tidyverse)
+dsample<-diamonds[sample(nrow(diamonds), 100),]
+ggplot(data=diamonds,aes(x=carat,y=price,color=color))+
+ geom_point()+
+  geom_smooth()
+```
+
+```{r}
+library(tidyverse)
+dsample<-diamonds[sample(nrow(diamonds), 100),]
+ggplot(data=diamonds,aes(x=carat,y=price,color=color))+
+ geom_boxplot()
+```
+
+
+I think, when the carat is less the color of the diamond is very good, whereas when the carat size increases the color of the diamond detoriates.
+

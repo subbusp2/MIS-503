@@ -1,0 +1,60 @@
+---
+output:
+  word_document: default
+  html_document: default
+---
+# Module 3 - Assignment 1
+# Subramanian, Subbu
+# Data Visulaization
+
+Will be using the datasets containing candy rankings and production that can be found on the Canvas course website.
+
+```{r Loading Tidyverse and data}
+
+library(tidyverse)
+candy_data<-read_csv("~/Documents/MBA/Programming for Analytics/Module 3/Assignment 1/candy_data.csv")
+candy_production <- read_csv("~/Documents/MBA/Programming for Analytics/Module 3/Assignment 1/candy_production.csv")
+```
+
+# Visualization with Scatterplots (geom_point)
+
+```{r Scatterplot}
+library(tidyverse)
+ggplot(data=candy_data,aes(x=sugarpercent,y=pricepercent,label=competitorname)) +
+  geom_point() +
+  geom_smooth(method="lm") +
+  geom_text(check_overlap = T,
+              vjust = "bottom", 
+              nudge_y = 0.01, 
+              angle = 30,size = 2) +
+  labs(title = "Sugar by Price Scatterplot", 
+         x = "Sugar content (percentile)", 
+         y = "Price (percentile)")
+```
+
+On analysis of the scattered plot of the candy data, "Skittles Original" has the most sugarpercent and lowest pricepercent.
+
+# Line Chart of Candy Production
+
+Will be using the datasets containing candy production dataset which will display a specific date and how production during that month is compared to 2012
+
+```{r Line chart of candy production}
+ggplot(data=candy_production,aes(x=observation_date,y=IPG3113N)) +
+  geom_line() +
+   labs(title = "Monthly Candy Production(US)", 
+         x = "Year", 
+         y = "As percent of 2012 production")
+
+
+```
+
+# Bar Chart of Ingredients
+
+```{r}
+library(tidyverse)
+candyFeatures<-candy_data %>% select(2:10) 
+candyFeatures[]<- lapply(candyFeatures, as.logical)
+ggplot(data=candyFeatures,aes(x=chocolate)) +
+  geom_bar()
+```
+

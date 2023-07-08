@@ -1,0 +1,46 @@
+---
+output:
+  word_document: default
+  html_document: default
+---
+
+# Module 4 - Assignment 1
+# Subramanian, Subbu
+# Data Cleansing
+```{r Data Load}
+library(tidyverse)
+library(readxl) 
+CustomerChurn <- read_excel("CustomerChurn.xlsx",  
+    col_types = c("text", "text", "text",  
+        "text", "numeric", "text", "text",  
+        "text", "text", "text", "text", "text",  
+        "text", "text", "text", "text", "text",  
+        "numeric", "numeric", "text")) 
+
+```
+
+
+
+## Cleaning Missing Data:
+
+```{r Data Cleaning}
+summary(CustomerChurn)
+CustomerChurn2 <- mutate(CustomerChurn,MonthlyCharges = replace(MonthlyCharges, is.nan(MonthlyCharges), median(MonthlyCharges, na.rm = TRUE)))
+CustomerChurn2 <- mutate(CustomerChurn,TotalCharges = replace(TotalCharges, is.na(TotalCharges), mean(TotalCharges, na.rm = TRUE)))
+CustomerChurn2<-mutate(CustomerChurn,PaymentMethod = replace(PaymentMethod, is.na(PaymentMethod), "ElectronicCheck"))
+
+CustomerChurn3 <- select(CustomerChurn2,MonthlyCharges,TotalCharges,PaymentMethod)
+print(CustomerChurn3)
+```
+
+## Outliers
+
+```{r Boxplot}
+boxplot(CustomerChurn2$tenure)
+boxplot(CustomerChurn2$tenure)$out
+outliers <- boxplot(CustomerChurn2$tenure)$out
+CustomerChurn2[which(CustomerChurn2$tenure %in% outliers),]
+CustomerChurn3 <- CustomerChurn2[-which(CustomerChurn2$tenure %in% outliers),] 
+boxplot(CustomerChurn3$tenure) 
+```
+
